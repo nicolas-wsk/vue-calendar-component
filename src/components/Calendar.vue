@@ -76,7 +76,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
   .calendar {
-    width: 600px;
+    max-width: 600px;
     margin: 0 auto;
     color: #737173;
   }
@@ -106,12 +106,17 @@ export default {
     flex-flow: row wrap;
     & > li {
       width: 14.2857%;
-      height: 85px;
+      // height: 85px;
       display: flex;
       justify-content: center;
       align-items: center;
       border-radius: 50%;
       cursor: pointer;
+    }
+    li:before{
+        content: "";
+        display: block;
+        padding-top: 100%;  /* initial ratio of 1:1*/
     }
     & > li:hover {
       background: #EFEFEF;
