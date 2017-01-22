@@ -11,7 +11,7 @@
         <h4 class="subtitle"><slot name="date"></slot></h4>
           <label class="label">Subject</label>
           <p class="control">
-            <textarea class="textarea" placeholder="e.g., Breakfast at Tiffany's" v-model="subject"></textarea>
+            <textarea ref='textarea' class="textarea" placeholder="e.g., Breakfast at Tiffany's" v-model="subject"></textarea>
           </p>
         </section>
 
@@ -30,6 +30,9 @@
       return {
         subject: ''
       }
+    },
+    mounted(){
+      this.$refs.textarea.focus();
     }
   }
 </script>

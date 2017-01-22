@@ -31,7 +31,7 @@
           </div>
         </article>
     </ul>
-    <modal v-if="showModal" @save="saveEvent" @close="showModal = false"><p slot="date">{{clickedDate}}</p></modal>
+    <modal v-if="showModal" @save="saveEvent" @close="showModal = false"><p slot="date">{{clickedDateISO}}</p></modal>
   </div>
 </template>
 
@@ -50,8 +50,7 @@ export default {
       today: moment(),
       dateContext: moment(),
       days: ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'],
-      clickedDate: '',
-      // clickedDateISO: '',
+      clickedDateISO: '',
       events: [
         {id: 0, date: '13 January 2017', subject: 'Interview with Elon Musk at Space X.'},
         {id: 1, date: '31 January 2017', subject: 'Conference at Hooli with Gavin.'}
@@ -97,12 +96,15 @@ export default {
     },
     addEvent (date) {
       this.clickedDateISO = `${this.year}-${this.monthNumber}-${("0" + date).slice(-2)}`;
-      this.clickedDate = `${date} ${this.month} ${this.year}`;
       this.showModal = true
     },
     saveEvent (subject){
       this.showModal = false;
-      this.events.push({id: this.events.length, date: this.clickedDate, subject})
+      this.events.push({id: this.events.length, date: this.clickedDateISO, subject})
+    },
+    deleteEvent(event){
+      let index = this.events.indexOf(event)
+      this.events.splice(index, 1)
     }
   }
 }
