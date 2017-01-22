@@ -3,12 +3,14 @@
     <div class="modal-background"></div>
       <div class="modal-card">
         <header class="modal-card-head">
-          <p class="modal-card-title">Add a new event</p>
+          <p class="modal-card-title">Create a new event</p>
           <button class="delete" @click="$emit('close')"></button>
         </header>
 
         <section class="modal-card-body">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa provident sint veniam iusto accusamus natus, dignissimos quam sequi in ut, magnam porro nobis tempora libero reiciendis. Eveniet unde quibusdam tempore.
+         <slot name="body">
+            Event
+          </slot>
         </section>
 
         <footer class="modal-card-foot">

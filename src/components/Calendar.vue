@@ -16,23 +16,27 @@
       <li v-for="blank in firstDayOfMonth">&nbsp;</li>
       <li v-for="date in daysInMonth"
       :class="{'current-day': date == initialDate && month == initialMonth && year == initialYear}"
-      @click="$emit('open')"
+      @click="showModal = true"
       v-text="date">
         <span></span>
       </li>
     </ul>
+    <modal v-if="showModal" @close="showModal = false">
   </div>
 </template>
 
 <script>
 import moment from 'moment'
+import Modal from './Modal';
 
 export default {
   name: 'calendar',
   components: {
+    Modal
   },
   data () {
     return {
+      showModal: false,
       today: moment(),
       dateContext: moment(),
       days: ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT']
