@@ -23,7 +23,7 @@
     <div class="events">
         <article class="message is-primary" v-for="event in events">
           <div class="message-header">
-            <p>{{event.date}}</p>
+            <p>{{dateBeautify(event.date)}}</p>
             <button class="delete" @click="deleteEvent(event)"></button>
           </div>
           <div class="message-body">
@@ -31,7 +31,7 @@
           </div>
         </article>
     </ul>
-    <modal v-if="showModal" @save="saveEvent" @close="showModal = false"><p slot="date">{{clickedDateISO}}</p></modal>
+    <modal v-if="showModal" @save="saveEvent" @close="showModal = false"><p slot="date">{{dateBeautify(clickedDateISO)}}</p></modal>
   </div>
 </template>
 
@@ -52,8 +52,8 @@ export default {
       days: ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'],
       clickedDateISO: '',
       events: [
-        {id: 0, date: '13 January 2017', subject: 'Interview with Elon Musk at Space X.'},
-        {id: 1, date: '31 January 2017', subject: 'Conference at Hooli with Gavin.'}
+        {id: 0, date: '2017-01-13', subject: 'Interview with Elon Musk at Space X.'},
+        {id: 1, date: '2017-01-30', subject: 'Conference at Hooli with Gavin.'}
       ]
     }
   },
@@ -88,23 +88,27 @@ export default {
     }
   },
   methods: {
-    addMonth () {
+    addMonth: function () {
       this.dateContext = moment(this.dateContext).add(1, 'month');
     },
-    subtractMonth () {
+    subtractMonth: function () {
       this.dateContext = moment(this.dateContext).subtract(1, 'month');
     },
-    addEvent (date) {
+    addEvent: function (date) {
       this.clickedDateISO = `${this.year}-${this.monthNumber}-${("0" + date).slice(-2)}`;
       this.showModal = true
     },
-    saveEvent (subject){
+    saveEvent: function (subject){
       this.showModal = false;
       this.events.push({id: this.events.length, date: this.clickedDateISO, subject})
     },
-    deleteEvent(event){
+    deleteEvent: function (event){
       let index = this.events.indexOf(event)
       this.events.splice(index, 1)
+    },
+    dateBeautify: function (date) {
+      let dateM = moment(date)
+      return `${dateM.format('DD')} ${dateM.format('MMMM')} ${dateM.format('YYYY')}`
     }
   }
 }
