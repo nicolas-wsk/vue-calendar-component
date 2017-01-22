@@ -21,7 +21,7 @@
       </li>
     </ul>
     <div class="events">
-        <article class="message is-primary" v-for="event in events">
+        <article class="message is-primary" v-for="event in orderedEvents">
           <div class="message-header">
             <p>{{dateBeautify(event.date)}}</p>
             <button class="delete" @click="deleteEvent(event)"></button>
@@ -85,6 +85,9 @@ export default {
     },
     initialYear: function () {
       return this.today.format('Y');
+    },
+    orderedEvents: function(){
+      return this.events.sort(function(a,b){return new Date(a.date).getTime() - new Date(b.date).getTime()});
     }
   },
   methods: {
@@ -145,6 +148,8 @@ export default {
   .dates {
     display: flex;
     flex-flow: row wrap;
+    margin: 5px 0;
+
     & > li {
       width: 14.2857%;
       // height: 85px;
