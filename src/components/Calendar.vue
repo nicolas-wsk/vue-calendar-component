@@ -53,7 +53,8 @@ export default {
       clickedDateISO: '',
       events: [
         {id: 0, date: '2017-01-13 08:30', subject: 'Interview with Elon Musk at Space X.'},
-        {id: 1, date: '2017-01-30 18:00', subject: 'Conference at Hooli with Gavin.'}
+        {id: 1, date: '2017-01-30 18:00', subject: 'Conference at Hooli with Gavin.'},
+        {id: 2, date: '2017-02-09 11:00', subject: 'Dinner with Donald Trump.'}
       ]
     }
   },
@@ -111,7 +112,7 @@ export default {
     },
     dateBeautify: function (date) {
       let dateM = moment(date)
-      return `${dateM.format('DD')} ${dateM.format('MMMM')} ${dateM.format('YYYY')}`
+      return `${dateM.format('D')} ${dateM.format('MMMM')} ${dateM.format('YYYY')}`
     },
     timeEvent: function (date) {
       let dateM = moment(date)
