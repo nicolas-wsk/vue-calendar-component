@@ -3,25 +3,35 @@
     <page-header></page-header>
     <section class="section">
       <div class="container">
-        <calendar></calendar>
+        <calendar @open="showModal = true"></calendar>
       </div>
     </section>
+    <modal v-if="showModal" @close="showModal = false">
   </div>
 </template>
 
 <script>
+import Bulma from 'bulma'
 import Calendar from './components/Calendar'
 import PageHeader from './components/PageHeader'
-import Bulma from 'bulma'
+import Modal from './components/Modal';
+
 
 export default {
   name: 'app',
   components: {
     Calendar,
-    PageHeader
+    PageHeader,
+    Modal
+  },
+  data () {
+    return {
+      showModal: false
+    }
   }
 }
 </script>
 
 <style lang="scss">
+
 </style>

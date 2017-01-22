@@ -16,6 +16,7 @@
       <li v-for="blank in firstDayOfMonth">&nbsp;</li>
       <li v-for="date in daysInMonth"
       :class="{'current-day': date == initialDate && month == initialMonth && year == initialYear}"
+      @click="$emit('open')"
       v-text="date">
         <span></span>
       </li>
@@ -28,6 +29,8 @@ import moment from 'moment'
 
 export default {
   name: 'calendar',
+  components: {
+  },
   data () {
     return {
       today: moment(),

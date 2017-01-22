@@ -25,7 +25,7 @@
               Documentation
             </a>
             <span class="nav-item">
-              <a class="button is-primary is-inverted">
+              <a class="button is-primary is-inverted" href="https://github.com/nicolas-wsk/vue-calendar-component">
                 <span class="icon">
                   <i class="fa fa-github"></i>
                 </span>
