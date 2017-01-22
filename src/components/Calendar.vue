@@ -21,7 +21,7 @@
       </li>
     </ul>
     <div class="events">
-        <article class="message is-primary" v-for="event in orderedEvents" v-show="getMonthOfDate(event.date) == monthNumber">
+        <article class="message is-info" v-for="event in orderedEvents" v-show="getMonthOfDate(event.date) == monthNumber">
           <div class="message-header">
             <p>{{dateBeautify(event.date)}} at {{timeEvent(event.date)}}</p>
             <button class="delete" @click="deleteEvent(event)"></button>
@@ -129,7 +129,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
   .calendar {
-    max-width: 600px;
+    max-width: 500px;
     margin: 0 auto;
     color: #737173;
   }
@@ -180,7 +180,7 @@ export default {
       background-color: #3E86CD;
       color: #fff;
       &:hover {
-        background: #3E86CD;
+        background: #3273dc;
       }
     }
   }
