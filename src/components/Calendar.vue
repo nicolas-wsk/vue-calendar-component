@@ -23,7 +23,7 @@
     <div class="events">
         <article class="message is-primary" v-for="event in orderedEvents">
           <div class="message-header">
-            <p>{{dateBeautify(event.date)}}</p>
+            <p>{{dateBeautify(event.date)}} at {{timeEvent(event.date)}}</p>
             <button class="delete" @click="deleteEvent(event)"></button>
           </div>
           <div class="message-body">
@@ -52,8 +52,8 @@ export default {
       days: ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'],
       clickedDateISO: '',
       events: [
-        {id: 0, date: '2017-01-13', subject: 'Interview with Elon Musk at Space X.'},
-        {id: 1, date: '2017-01-30', subject: 'Conference at Hooli with Gavin.'}
+        {id: 0, date: '2017-01-13 08:30', subject: 'Interview with Elon Musk at Space X.'},
+        {id: 1, date: '2017-01-30 18:00', subject: 'Conference at Hooli with Gavin.'}
       ]
     }
   },
@@ -101,9 +101,9 @@ export default {
       this.clickedDateISO = `${this.year}-${this.monthNumber}-${("0" + date).slice(-2)}`;
       this.showModal = true
     },
-    saveEvent: function (subject){
+    saveEvent: function (subject, time){
       this.showModal = false;
-      this.events.push({id: this.events.length, date: this.clickedDateISO, subject})
+      this.events.push({id: this.events.length, date: this.clickedDateISO + ' ' + time, subject})
     },
     deleteEvent: function (event){
       let index = this.events.indexOf(event)
@@ -112,6 +112,10 @@ export default {
     dateBeautify: function (date) {
       let dateM = moment(date)
       return `${dateM.format('DD')} ${dateM.format('MMMM')} ${dateM.format('YYYY')}`
+    },
+    timeEvent: function (date) {
+      let dateM = moment(date)
+      return `${dateM.format('HH:mm')}`
     }
   }
 }

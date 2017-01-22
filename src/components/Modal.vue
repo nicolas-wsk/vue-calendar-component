@@ -9,6 +9,10 @@
 
         <section class="modal-card-body">
         <h4 class="subtitle"><slot name="date"></slot></h4>
+          <label class="label">At </label>
+          <p class="control">
+          <input class="input" type="time" v-model="time"name="bday">
+          </p>
           <label class="label">Subject</label>
           <p class="control">
             <textarea ref='textarea' class="textarea" placeholder="e.g., Breakfast at Tiffany's" v-model="subject"></textarea>
@@ -16,7 +20,7 @@
         </section>
 
         <footer class="modal-card-foot">
-          <a class="button is-primary" @click="$emit('save', subject)">Save event</a>
+          <a class="button is-primary" @click="$emit('save', subject, time)">Save event</a>
           <a class="button" @click="$emit('close')">Cancel</a>
         </footer>
       </div>
@@ -28,7 +32,8 @@
     name: 'modal',
     data () {
       return {
-        subject: ''
+        subject: '',
+        time: '10:30'
       }
     },
     mounted(){
