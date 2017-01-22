@@ -1,18 +1,24 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <hello></hello>
+    <page-header></page-header>
+    <section class="section">
+      <div class="container">
+        <calendar></calendar>
+      </div>
+    </section>
   </div>
 </template>
 
 <script>
-import Hello from './components/Hello'
+import Calendar from './components/Calendar'
+import PageHeader from './components/PageHeader'
 import Bulma from 'bulma'
 
 export default {
   name: 'app',
   components: {
-    Hello
+    Calendar,
+    PageHeader
   }
 }
 </script>
