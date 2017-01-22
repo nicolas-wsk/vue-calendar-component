@@ -1,9 +1,13 @@
 <template>
   <div class="calendar">
     <div class="calendar-header">
-      <i class="fa fa-chevron-left" @click="subtractMonth"></i>
+      <span class="icon">
+        <i class="fa fa-chevron-left" @click="subtractMonth"></i>
+      </span>
       <h4 class="title is-4"> {{month}} {{year}}</h4>
-      <i class="fa fa-chevron-right" @click="addMonth"></i>
+      <span class="icon">
+        <i class="fa fa-chevron-right" @click="addMonth"></i>
+      </span>
     </div>
     <ul class="weekdays">
       <li v-for="day in days" v-text="day"></li>
@@ -74,6 +78,7 @@ export default {
   .calendar {
     width: 600px;
     margin: 0 auto;
+    color: #737173;
   }
   .calendar-header, .weekdays {
     display: flex;
@@ -83,11 +88,16 @@ export default {
     }
   }
 
+  .fa {
+    cursor: pointer;
+  }
+
   .weekdays {
     padding: 5px 0;
     border-bottom: 1px solid #EFEFEF;
     li {
       color: #BCBABC;
+      font-weight: 300;
     }
   }
 
@@ -101,6 +111,7 @@ export default {
       justify-content: center;
       align-items: center;
       border-radius: 50%;
+      cursor: pointer;
     }
     & > li:hover {
       background: #EFEFEF;
