@@ -21,7 +21,7 @@
       </li>
     </ul>
     <div class="events">
-        <article class="message is-primary" v-for="event in orderedEvents">
+        <article class="message is-primary" v-for="event in orderedEvents" v-show="getMonthOfDate(event.date) == monthNumber">
           <div class="message-header">
             <p>{{dateBeautify(event.date)}} at {{timeEvent(event.date)}}</p>
             <button class="delete" @click="deleteEvent(event)"></button>
@@ -116,6 +116,10 @@ export default {
     timeEvent: function (date) {
       let dateM = moment(date)
       return `${dateM.format('HH:mm')}`
+    },
+    getMonthOfDate: function(date){
+      let dateM = moment(date)
+      return `${dateM.format('MM')}`
     }
   }
 }
