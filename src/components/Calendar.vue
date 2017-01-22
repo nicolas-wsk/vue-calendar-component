@@ -4,12 +4,43 @@
 </template>
 
 <script>
+import moment from 'moment'
+
 export default {
   name: 'calendar',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      today: moment(),
+      dateContext: moment(),
+      days: ['S', 'M', 'T', 'W', 'T', 'F', 'S']
     }
+  },
+  computed: {
+      year: function () {
+        return this.dateContext.format('Y');
+      },
+      month: function () {
+        return this.dateContext.format('MMMM');
+      },
+      daysInMonth: function () {
+        return this.dateContext.daysInMonth();
+      },
+      currentDate: function () {
+        return this.dateContext.get('date');
+      },
+      firstDayOfMonth: function () {
+        let firstDay = moment(this.dateContext).subtract((this.currentDate - 1), 'days');
+        return firstDay.weekday();
+      },
+      initialDate: function () {
+        return this.today.get('date');
+      },
+      initialMonth: function () {
+        return this.today.format('MMMM');
+      },
+      initialYear: function () {
+        return this.today.format('Y');
+      }
   }
 }
 </script>
