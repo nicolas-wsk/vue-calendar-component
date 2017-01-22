@@ -1,6 +1,11 @@
 # vuecalendar
 
-> A Vue.js project
+> Calendar Vue Component
+
+## Made with
+  * Vue.js
+  * Moment.js
+  * Bulma CSS
 
 ## Build Setup
 

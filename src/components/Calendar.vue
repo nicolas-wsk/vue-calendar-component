@@ -1,5 +1,21 @@
 <template>
   <div class="calendar">
+    <div class="calendar-header">
+      <i class="fa fa-chevron-left" @click="subtractMonth"></i>
+      <h4 class="title is-4"> {{month}} {{year}}</h4>
+      <i class="fa fa-chevron-right" @click="addMonth"></i>
+    </div>
+    <ul class="weekdays">
+      <li v-for="day in days" v-text="day"></li>
+    </ul>
+    <ul class="dates">
+      <li v-for="blank in firstDayOfMonth">&nbsp;</li>
+      <li v-for="date in daysInMonth"
+      :class="{'current-day': date == initialDate && month == initialMonth && year == initialYear}"
+      v-text="date">
+        <span></span>
+      </li>
+    </ul>
   </div>
 </template>
 
@@ -12,7 +28,7 @@ export default {
     return {
       today: moment(),
       dateContext: moment(),
-      days: ['S', 'M', 'T', 'W', 'T', 'F', 'S']
+      days: ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT']
     }
   },
   computed: {
@@ -54,22 +70,47 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-h1, h2 {
-  font-weight: normal;
-}
+<style scoped lang="scss">
+  .calendar {
+    width: 600px;
+    margin: 0 auto;
+  }
+  .calendar-header, .weekdays {
+    display: flex;
+    & > * {
+      flex: 1;
+      text-align: center;
+    }
+  }
 
-ul {
-  list-style-type: none;
-  padding: 0;
-}
+  .weekdays {
+    padding: 5px 0;
+    border-bottom: 1px solid #EFEFEF;
+    li {
+      color: #BCBABC;
+    }
+  }
 
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-
-a {
-  color: #42b983;
-}
+  .dates {
+    display: flex;
+    flex-flow: row wrap;
+    & > li {
+      width: 14.2857%;
+      height: 85px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 50%;
+    }
+    & > li:hover {
+      background: #EFEFEF;
+    }
+    .current-day {
+      background-color: #3E86CD;
+      color: #fff;
+      &:hover {
+        background: #3E86CD;
+      }
+    }
+  }
 </style>
