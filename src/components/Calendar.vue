@@ -16,12 +16,22 @@
       <li v-for="blank in firstDayOfMonth">&nbsp;</li>
       <li v-for="date in daysInMonth"
       :class="{'current-day': date == initialDate && month == initialMonth && year == initialYear}"
-      @click="showModal = true"
+      @click="addEvent(date)"
       v-text="date">
-        <span></span>
       </li>
     </ul>
-    <modal v-if="showModal" @close="showModal = false">
+    <div class="events">
+        <article class="message is-primary" v-for="event in events">
+          <div class="message-header">
+            <p>{{event.date}}</p>
+            <button class="delete" @click="deleteEvent(event)"></button>
+          </div>
+          <div class="message-body">
+           {{event.subject}}
+          </div>
+        </article>
+    </ul>
+    <modal v-if="showModal" @save="saveEvent" @close="showModal = false"><p slot="date">{{clickedDate}}</p></modal>
   </div>
 </template>
 
@@ -39,7 +49,13 @@ export default {
       showModal: false,
       today: moment(),
       dateContext: moment(),
-      days: ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT']
+      days: ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'],
+      clickedDate: '',
+      // clickedDateISO: '',
+      events: [
+        {id: 0, date: '13 January 2017', subject: 'Interview with Elon Musk at Space X.'},
+        {id: 1, date: '31 January 2017', subject: 'Conference at Hooli with Gavin.'}
+      ]
     }
   },
   computed: {
@@ -49,8 +65,11 @@ export default {
     month: function () {
       return this.dateContext.format('MMMM');
     },
+    monthNumber: function () {
+      return this.dateContext.format('MM');
+    },
     daysInMonth: function () {
-      return this.dateContext.daysInMonth();
+      return this.dateContext.daysInMonth('');
     },
     currentDate: function () {
       return this.dateContext.get('date');
@@ -70,11 +89,20 @@ export default {
     }
   },
   methods: {
-    addMonth: function () {
+    addMonth () {
       this.dateContext = moment(this.dateContext).add(1, 'month');
     },
-    subtractMonth: function () {
+    subtractMonth () {
       this.dateContext = moment(this.dateContext).subtract(1, 'month');
+    },
+    addEvent (date) {
+      this.clickedDateISO = `${this.year}-${this.monthNumber}-${("0" + date).slice(-2)}`;
+      this.clickedDate = `${date} ${this.month} ${this.year}`;
+      this.showModal = true
+    },
+    saveEvent (subject){
+      this.showModal = false;
+      this.events.push({id: this.events.length, date: this.clickedDate, subject})
     }
   }
 }

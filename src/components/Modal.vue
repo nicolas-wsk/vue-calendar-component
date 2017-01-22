@@ -8,13 +8,15 @@
         </header>
 
         <section class="modal-card-body">
-         <slot name="body">
-            Event
-          </slot>
+        <h4 class="subtitle"><slot name="date"></slot></h4>
+          <label class="label">Subject</label>
+          <p class="control">
+            <textarea class="textarea" placeholder="e.g., Breakfast at Tiffany's" v-model="subject"></textarea>
+          </p>
         </section>
 
         <footer class="modal-card-foot">
-          <a class="button is-primary">Save event</a>
+          <a class="button is-primary" @click="$emit('save', subject)">Save event</a>
           <a class="button" @click="$emit('close')">Cancel</a>
         </footer>
       </div>
@@ -26,6 +28,7 @@
     name: 'modal',
     data () {
       return {
+        subject: ''
       }
     }
   }
