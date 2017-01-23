@@ -7,6 +7,8 @@
   * Moment.js
   * Bulma CSS
 
+http://vue-calendar-dev.surge.sh/
+
 ## Build Setup
 
 ``` bash

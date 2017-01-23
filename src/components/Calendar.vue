@@ -21,7 +21,9 @@
       </li>
     </ul>
     <div class="events">
-        <article class="message is-info" v-for="event in orderedEvents" v-show="getMonthOfDate(event.date) == monthNumber">
+        <article class="message is-info"
+        :class="{'is-warning': new Date(event.date).getTime() < new Date(today).getTime()}"
+        v-for="event in orderedEvents" v-show="getMonthOfDate(event.date) == monthNumber">
           <div class="message-header">
             <p>{{dateBeautify(event.date)}} at {{timeEvent(event.date)}}</p>
             <button class="delete" @click="deleteEvent(event)"></button>
