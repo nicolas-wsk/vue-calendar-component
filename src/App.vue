@@ -11,9 +11,8 @@
 
 <script>
 import Bulma from 'bulma'
-import Calendar from './components/Calendar'
+import Calendar from './components/Calendar/Calendar'
 import PageHeader from './components/PageHeader'
-
 
 export default {
   name: 'app',
