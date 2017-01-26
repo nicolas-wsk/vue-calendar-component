@@ -6,9 +6,9 @@
     </calendar-header>
     <day-list :dateContext="dateContext" :today="today" @openModal="openModal"></day-list>
     <event-list :events="orderedEvents" :dateContext="dateContext" :today="today"
-    @deleteEvent="deleteEvent">
+    @deleteEvent="deleteEvent" @openModal="openModal">
     </event-list>
-    <modal v-if="showModal" @save="saveEvent" @close="showModal = false">
+    <modal v-if="showModal" @save="saveEvent" @close="closeModal" :event="clickedEvent">
       <p slot="date">{{clickedDate | toDate}}</p>
     </modal>
   </div>
@@ -20,7 +20,7 @@ import Modal from '../Modal'
 import CalendarHeader from './CalendarHeader'
 import DayList from './DayList'
 import EventList from './EventList'
-import {orderByDate, getMonthNumber, getYear} from '../../helpers'
+import {orderByDate, getMonthNumber, getYear, eventStorage} from '../../helpers'
 
 export default {
   name: 'calendar',
@@ -36,11 +36,17 @@ export default {
       today: moment(),
       dateContext: moment(),
       clickedDate: '',
-      events: [
-        {id: 0, date: '2017-01-13 08:30', subject: 'Interview with Elon Musk at Space X.'},
-        {id: 1, date: '2017-01-30 18:00', subject: 'Conference at Hooli with Gavin.'},
-        {id: 2, date: '2017-02-09 11:00', subject: 'Dinner with Donald Trump.'}
-      ]
+      clickedEvent: {subject: '', date: moment()},
+      events: eventStorage.fetch()
+    }
+  },
+  // watch events change for localStorage persistence
+  watch: {
+    events: {
+      handler: function (events) {
+        eventStorage.save(events)
+      },
+     deep: true
     }
   },
   computed: {
@@ -55,13 +61,29 @@ export default {
     subtractMonth: function () {
       this.dateContext = moment(this.dateContext).subtract(1, 'month')
     },
-    openModal: function (date) {
+    openModal: function (date, event) {
       this.clickedDate = `${getYear(this.dateContext)}-${getMonthNumber(this.dateContext)}-${("0" + date).slice(-2)}`
+      if(event) {
+        this.clickedEvent = event
+        this.clickedDate = event.date
+      }
       this.showModal = true
     },
-    saveEvent: function (subject, time){
+    closeModal: function(){
+      this.showModal = false
+      this.clickedEvent = {subject: '', date: moment()}
+    },
+    saveEvent: function (subject, time, event){
+      if(event.id || event.id == '0'){
+        // We find the index of the updated event and update it.
+        let eventId = this.events.indexOf(this.events.find(x => x.id == event.id))
+        this.$set(this.events, eventId , {id: event.id, subject: subject, date: moment(event.date).hours(time.split(':')[0]).minutes(time.split(':')[1])})
+        this.clickedEvent = {subject: '', date: moment()}
+      } else {
+        // We add the event.
+        this.events.push({id: this.events.length, date: this.clickedDate + ' ' + time, subject})
+      }
       this.showModal = false;
-      this.events.push({id: this.events.length, date: this.clickedDate + ' ' + time, subject})
     },
     deleteEvent: function (event){
       let index = this.events.indexOf(event)

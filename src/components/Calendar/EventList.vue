@@ -1,6 +1,8 @@
 <template>
   <div class="events">
-    <event v-for="event in events" :event="event" :dateContext="dateContext" :today="today" @deleteEvent="$emit('deleteEvent',event)">
+    <event v-for="event in events" :event="event" :dateContext="dateContext" :today="today"
+    @deleteEvent="$emit('deleteEvent',event)"
+    @openModal="$emit('openModal',event.date, event)">
     </event>
   </div>
 </template>

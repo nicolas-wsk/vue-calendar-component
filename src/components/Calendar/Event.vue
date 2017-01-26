@@ -1,10 +1,11 @@
 <template>
   <article v-show="eventMonth == dateMonth" class="message is-info"
   :class="{'is-warning': new Date(event.date).getTime() < new Date(today).getTime()}"
+  @click.stop="$emit('openModal',event.date, event)"
   >
     <div class="message-header">
       <p>{{event.date | toDate }} at {{ event.date | toTime }}</p>
-      <button class="delete" @click="$emit('deleteEvent',event)"></button>
+      <button class="delete" @click.stop="$emit('deleteEvent',event)"></button>
     </div>
     <div class="message-body">
      {{event.subject}}
