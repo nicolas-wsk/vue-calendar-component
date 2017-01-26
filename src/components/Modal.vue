@@ -35,9 +35,6 @@
         subject: '',
         time: '10:30'
       }
-    },
-    mounted(){
-      this.$refs.textarea.focus();
     }
   }
 </script>

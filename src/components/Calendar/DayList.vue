@@ -1,35 +1,29 @@
 <template>
   <ul class="dates">
     <li v-for="blank in firstDayOfMonth">&nbsp;</li>
-    <li v-for="date in daysInMonth"
-    :class="{'current-day': date == todayDay && simpleDate == todayDate}"
-    @click="$emit('openModal', date)"
-    v-text="date">
-    </li>
+    <day v-for="date in daysInMonth"
+    :date="date" :dateContext="dateContext" :today="today"
+    @openModal="$emit('openModal', date)">
+    </day>
   </ul>
 </template>
 
 <script>
-import {getDaysInMonth, getFirstDaysInMonth, toDate, getDay} from '../../helpers'
+import Day from './Day'
+import {getDaysInMonth, getFirstDaysInMonth} from '../../helpers'
 
 export default {
   name: 'day-list',
   props: ['dateContext', 'today'],
+  components: {
+    Day
+  },
   computed: {
     daysInMonth: function () {
       return getDaysInMonth(this.dateContext)
     },
     firstDayOfMonth: function () {
       return getFirstDaysInMonth(this.dateContext)
-    },
-    simpleDate: function () {
-      return toDate(this.dateContext)
-    },
-    todayDay: function () {
-      return getDay(this.today)
-    },
-    todayDate: function() {
-      return toDate(this.today)
     }
   }
 }
@@ -55,14 +49,6 @@ export default {
     }
     & > li:hover {
       background: #EFEFEF;
-    }
-
-    .current-day {
-      background-color: #3E86CD;
-      color: #fff;
-      &:hover {
-        background: #3273dc;
-      }
     }
   }
 </style>

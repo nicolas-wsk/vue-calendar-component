@@ -1,19 +1,12 @@
 <template>
   <div class="calendar">
-    <div class="calendar-header">
-      <span class="icon">
-        <i class="fa fa-chevron-left" @click="subtractMonth"></i>
-      </span>
-      <h4 class="title is-4"> {{dateContext | toMonth}} {{dateContext | toYear}}</h4>
-      <span class="icon">
-        <i class="fa fa-chevron-right" @click="addMonth"></i>
-      </span>
-    </div>
-    <ul class="weekdays">
-      <li v-for="day in days" v-text="day"></li>
-    </ul>
+    <calendar-header :dateContext="dateContext"
+    @subtractMonth="subtractMonth"
+    @addMonth="addMonth">
+    </calendar-header>
     <day-list :dateContext="dateContext" :today="today" @openModal="openModal"></day-list>
-    <event-list :events="orderedEvents" :dateContext="dateContext" :today="today" @deleteEvent="deleteEvent">
+    <event-list :events="orderedEvents" :dateContext="dateContext" :today="today"
+    @deleteEvent="deleteEvent">
     </event-list>
     <modal v-if="showModal" @save="saveEvent" @close="showModal = false">
       <p slot="date">{{clickedDate | toDate}}</p>
@@ -24,6 +17,7 @@
 <script>
 import moment from 'moment'
 import Modal from '../Modal'
+import CalendarHeader from './CalendarHeader'
 import DayList from './DayList'
 import EventList from './EventList'
 import {orderByDate, getMonthNumber, getYear} from '../../helpers'
@@ -33,14 +27,14 @@ export default {
   components: {
     Modal,
     DayList,
-    EventList
+    EventList,
+    CalendarHeader
   },
   data () {
     return {
       showModal: false,
       today: moment(),
       dateContext: moment(),
-      days: ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'],
       clickedDate: '',
       events: [
         {id: 0, date: '2017-01-13 08:30', subject: 'Interview with Elon Musk at Space X.'},
@@ -83,26 +77,5 @@ export default {
     max-width: 500px;
     margin: 0 auto;
     color: #737173;
-  }
-
-  .calendar-header, .weekdays {
-    display: flex;
-    & > * {
-      flex: 1;
-      text-align: center;
-    }
-  }
-
-  .fa {
-    cursor: pointer;
-  }
-
-  .weekdays {
-    padding: 5px 0;
-    border-bottom: 1px solid #EFEFEF;
-    li {
-      color: #BCBABC;
-      font-weight: 300;
-    }
   }
 </style>
