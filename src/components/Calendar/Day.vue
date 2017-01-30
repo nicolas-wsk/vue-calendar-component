@@ -7,20 +7,20 @@
 </template>
 
 <script>
-import {toDate, getDay} from '../../helpers'
+import {toDate, getDay, getMonth, getYear} from '../../helpers'
 
 export default {
   name: 'day',
   props: ['dateContext', 'today', 'date'],
   computed: {
     simpleDate: function () {
-      return toDate(this.dateContext)
+      return getMonth(this.dateContext) + getYear(this.dateContext)
     },
     todayDay: function () {
       return getDay(this.today)
     },
     todayDate: function() {
-      return toDate(this.today)
+      return getMonth(this.today) + getYear(this.today)
     }
   }
 }
